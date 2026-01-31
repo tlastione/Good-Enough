@@ -1,4 +1,4 @@
-module tg-adapter
+module in-processor
 
 go 1.25.4
 
