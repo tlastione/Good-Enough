@@ -3,6 +3,7 @@ services:
     image: apache/kafka:latest
     hostname: broker
     container_name: broker
+    restart: always
     ports:
       - 9092:9092
     environment:
@@ -24,5 +25,38 @@ services:
     volumes:
       - kafka-data:/var/lib/kafka/data
 
+  content-db:
+    image: postgres:18
+    hostname: content-db
+    container_name: content-db
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: content
+      POSTGRES_USER: content
+      POSTGRES_PASSWORD: ${CONTENT_DB_PASSWORD}
+    volumes:
+      - content-data:/var/lib/postgresql
+
+  reporter-db:
+    image: postgres:18
+    hostname: reporter-db
+    container_name: reporter-db
+    restart: always
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_DB: reporter
+      POSTGRES_USER: reporter
+      POSTGRES_PASSWORD: ${REPORTER_DB_PASSWORD}
+    volumes:
+      - reporter-data:/var/lib/postgresql
+
+
 volumes:
   kafka-data:
+  content-data:
+  reporter-data:
+
+  
